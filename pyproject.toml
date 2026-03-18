@@ -1,0 +1,106 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "django-helsinki-health-endpoints"
+version = "0.0.0"
+description = "Reusable Django app providing unified healthz and readiness endpoints for City of Helsinki projects"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    { name = "City of Helsinki", email = "dev@hel.fi" },
+]
+dependencies = [
+    "Django>=5.2",
+    "tomli>=2.0; python_version < '3.11'",
+]
+classifiers = [
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "Framework :: Django :: 5.2",
+    "Framework :: Django :: 6.0",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: System :: Monitoring",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pytest-cov",
+    "pytest-django",
+]
+
+[project.urls]
+Homepage = "https://github.com/City-of-Helsinki/django-helsinki-health-endpoints"
+Repository = "https://github.com/City-of-Helsinki/django-helsinki-health-endpoints"
+
+[tool.hatch.build.targets.wheel]
+packages = ["helsinki_health_endpoints"]
+
+[tool.hatch.envs.hatch-test]
+features = ["test"]
+default-args = ["helsinki_health_endpoints/tests"]
+
+[[tool.hatch.envs.hatch-test.matrix]]
+python = ["3.10", "3.11"]
+django = ["5.2"]
+
+[[tool.hatch.envs.hatch-test.matrix]]
+python = ["3.12", "3.13", "3.14"]
+django = ["5.2", "6.0"]
+
+[tool.hatch.envs.hatch-test.overrides]
+matrix.django.dependencies = [
+    { value = "django~={matrix:django}" },
+]
+
+[tool.hatch.envs.dev]
+dependencies = [
+    "django>=5.2",
+]
+
+[tool.hatch.envs.dev.env-vars]
+DJANGO_SETTINGS_MODULE = "helsinki_health_endpoints.tests.settings"
+
+[tool.ruff]
+target-version = "py310"
+
+[tool.ruff.lint]
+select = [
+    "F",    # Pyflakes
+    "UP",   # pyupgrade
+    "E",    # pycodestyle
+    "W",    # pycodestyle warnings
+    "S",    # flake8-bandit
+    "FBT",  # flake8-boolean-trap
+    "B",    # flake8-bugbear
+    "C4",   # flake8-comprehensions
+    "DJ",   # flake8-django
+    "INT",  # flake8-gettext
+    "PIE",  # flake8-pie
+    "T20",  # flake8-print
+    "SIM",  # flake8-simplify
+    "N",    # pep8-naming
+    "PGH",  # pygrep-hooks
+    "I001", # isort
+]
+extend-per-file-ignores = { "*/tests/*" = ["E501", "S101"] }
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "helsinki_health_endpoints.tests.settings"
+testpaths = ["helsinki_health_endpoints/tests"]
+
+[tool.coverage.run]
+source = ["helsinki_health_endpoints"]
+omit = ["*/tests/*"]

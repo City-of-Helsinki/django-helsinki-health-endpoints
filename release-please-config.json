@@ -23,6 +23,5 @@
       ]
     }
   },
-  "plugins": ["sentence-case"],
-  "initial-version": "1.0.0"
+  "plugins": ["sentence-case"]
 }

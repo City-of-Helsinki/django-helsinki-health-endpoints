@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "django-helsinki-health-endpoints"
-version = "0.0.0"
+version = "1.0.0"
 description = "Reusable Django app providing unified healthz and readiness endpoints for City of Helsinki projects"
 readme = "README.md"
 license = "MIT"

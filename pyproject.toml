@@ -8,6 +8,7 @@ version = "0.0.0"
 description = "Reusable Django app providing unified healthz and readiness endpoints for City of Helsinki projects"
 readme = "README.md"
 license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.10"
 authors = [
     { name = "City of Helsinki", email = "dev@hel.fi" },
@@ -26,6 +27,7 @@ classifiers = [
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -44,13 +46,17 @@ test = [
 [project.urls]
 Homepage = "https://github.com/City-of-Helsinki/django-helsinki-health-endpoints"
 Repository = "https://github.com/City-of-Helsinki/django-helsinki-health-endpoints"
+Issues = "https://github.com/City-of-Helsinki/django-helsinki-health-endpoints/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["helsinki_health_endpoints"]
 
 [tool.hatch.envs.hatch-test]
-features = ["test"]
 default-args = ["tests"]
+features = ["test"]
+matrix-name-format = "dj{value}"
+parallel = false
+randomize = true
 
 [[tool.hatch.envs.hatch-test.matrix]]
 python = ["3.10", "3.11"]
@@ -65,41 +71,59 @@ matrix.django.dependencies = [
     { value = "django~={matrix:django}" },
 ]
 
-[tool.hatch.envs.dev]
-dependencies = [
-    "django>=5.2",
+[tool.hatch.envs.hatch-test.scripts]
+run = [
+    "pytest{env:HATCH_TEST_ARGS:} {args}",
 ]
+run-cov = "coverage run -m pytest{env:HATCH_TEST_ARGS:} {args}"
+cov-combine = "coverage combine"
+cov-report = "coverage report"
 
-[tool.hatch.envs.dev.env-vars]
-DJANGO_SETTINGS_MODULE = "tests.settings"
+[tool.hatch.envs.default]
+dependencies = [
+    "pre-commit",
+]
+features = ["test"]
+
+[tool.hatch.envs.default.scripts]
+test = "pytest {args}"
+lint = [
+    "pre-commit install",
+    "pre-commit run -a",
+]
 
 [tool.ruff]
 target-version = "py310"
 
 [tool.ruff.lint]
 select = [
-    "F",    # Pyflakes
-    "UP",   # pyupgrade
-    "E",    # pycodestyle
-    "W",    # pycodestyle warnings
-    "S",    # flake8-bandit
-    "FBT",  # flake8-boolean-trap
-    "B",    # flake8-bugbear
-    "C4",   # flake8-comprehensions
-    "DJ",   # flake8-django
-    "INT",  # flake8-gettext
-    "PIE",  # flake8-pie
-    "T20",  # flake8-print
-    "SIM",  # flake8-simplify
-    "N",    # pep8-naming
-    "PGH",  # pygrep-hooks
-    "I001", # isort
+    # Pyflakes
+    "F",
+    # pycodestyle
+    "E",
+    "W",
+    # isort
+    "I",
+    # pep8-naming
+    "N",
+    # flake8-bugbear without opinionated rules
+    "B0",
+    # flake8-pie
+    "PIE",
+    # flake8-print
+    "T20",
+    # pyupgrade
+    "UP",
 ]
-extend-per-file-ignores = { "**/tests/*" = ["E501", "S101"] }
+extend-per-file-ignores = { "*/migrations/*" = ["E501"], "*/tests/*" = ["E501"] }
 
 [tool.pytest.ini_options]
+django_find_project = false
+testpaths = [
+    "tests",
+]
 DJANGO_SETTINGS_MODULE = "tests.settings"
-testpaths = ["tests"]
+pythonpath = "."
 
 [tool.coverage.run]
 source = ["helsinki_health_endpoints"]

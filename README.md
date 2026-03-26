@@ -136,7 +136,7 @@ pip install hatch
 
 ### Set up the development environment
 
-Hatch manages virtual environments automatically. To create and enter a shell in the default dev environment:
+Hatch manages virtual environments automatically. To create and enter a shell in the default environment:
 
 ```bash
 hatch shell
@@ -145,7 +145,12 @@ hatch shell
 To install pre-commit hooks (required before committing):
 
 ```bash
-pip install pre-commit
+hatch run lint
+```
+
+This will install pre-commit and run all hooks. Alternatively:
+
+```bash
 pre-commit install
 ```
 
@@ -188,10 +193,17 @@ Each combination gets its own isolated venv (created automatically by hatch on f
 
 ### Manual testing
 
-The repository includes a `manage.py` pre-configured with the test settings (SQLite in-memory database). A dedicated `dev` Hatch environment sets the `DJANGO_SETTINGS_MODULE` for these test settings, which configure `DEBUG=True`:
+The repository includes a `manage.py` pre-configured with the test settings (SQLite in-memory database). You can run it from within the default Hatch environment:
 
 ```bash
-hatch run dev:python manage.py runserver
+hatch run python manage.py runserver
+```
+
+Or enter the environment shell first and run it directly:
+
+```bash
+hatch shell
+python manage.py runserver
 ```
 
 Then hit the endpoints:
@@ -205,6 +217,9 @@ curl http://localhost:8000/readiness
 
 ```bash
 # Run all pre-commit hooks against all files
+hatch run lint
+
+# Or run pre-commit directly (after installing hooks)
 pre-commit run --all-files
 
 # Run only ruff lint (with autofix)

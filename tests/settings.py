@@ -15,7 +15,7 @@ INSTALLED_APPS = [
     "helsinki_health_endpoints",
 ]
 
-ROOT_URLCONF = "helsinki_health_endpoints.tests.urls"
+ROOT_URLCONF = "tests.urls"
 
 SECRET_KEY = "test-secret-key-not-for-production"  # noqa: S105
 

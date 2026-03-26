@@ -172,7 +172,7 @@ hatch test -i py=3.12 -i django=5.2
 Pass arguments through to pytest (e.g. run a single test file):
 
 ```bash
-hatch test -- helsinki_health_endpoints/tests/test_views.py -v
+hatch test -- tests/test_views.py -v
 ```
 
 ### The test matrix

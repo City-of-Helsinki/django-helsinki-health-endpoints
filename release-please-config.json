@@ -1,11 +1,12 @@
 {
-  "bootstrap-sha": "",
   "sequential-calls": true,
   "packages": {
     ".": {
       "release-type": "python",
       "package-name": "django-helsinki-health-endpoints",
       "extra-files": ["pyproject.toml"],
+      "exclude-paths": ["tests"],
+      "include-component-in-tag": false,
       "changelog-sections": [
         {"type": "feat", "section": "Features"},
         {"type": "fix", "section": "Bug Fixes"},

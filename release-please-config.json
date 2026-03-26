@@ -4,7 +4,6 @@
     ".": {
       "release-type": "python",
       "package-name": "django-helsinki-health-endpoints",
-      "initial-version": "1.0.0",
       "extra-files": ["pyproject.toml"],
       "exclude-paths": ["tests"],
       "include-component-in-tag": false,
@@ -24,5 +23,6 @@
       ]
     }
   },
-  "plugins": ["sentence-case"]
+  "plugins": ["sentence-case"],
+  "initial-version": "1.0.0"
 }

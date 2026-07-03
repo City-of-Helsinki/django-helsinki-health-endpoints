@@ -4,7 +4,7 @@ from unittest.mock import patch
 import pytest
 from django.test import override_settings
 
-from helsinki_health_endpoints.utils import _check_database, _get_package_version
+from helsinki_health_endpoints.utils import _check_database, _get_version
 
 
 @pytest.mark.skipif(
@@ -29,23 +29,23 @@ class TestCheckDatabase:
             assert _check_database() == "error"
 
 
-class TestGetPackageVersion:
+class TestGetVersion:
     @pytest.fixture(autouse=True)
     def clear_cache(self):
-        _get_package_version.cache_clear()
+        _get_version.cache_clear()
         yield
-        _get_package_version.cache_clear()
+        _get_version.cache_clear()
 
     def test_reads_from_pyproject_toml(self, tmp_path):
         (tmp_path / "pyproject.toml").write_bytes(b'[project]\nversion = "3.2.1"\n')
         with override_settings(BASE_DIR=str(tmp_path)):
-            assert _get_package_version() == "3.2.1"
+            assert _get_version() == "3.2.1"
 
     def test_returns_unknown_when_file_is_missing(self, tmp_path):
         with override_settings(BASE_DIR=str(tmp_path)):
-            assert _get_package_version() == "unknown"
+            assert _get_version() == "unknown"
 
     def test_returns_unknown_when_version_key_absent(self, tmp_path):
         (tmp_path / "pyproject.toml").write_bytes(b"[project]\n")
         with override_settings(BASE_DIR=str(tmp_path)):
-            assert _get_package_version() == "unknown"
+            assert _get_version() == "unknown"

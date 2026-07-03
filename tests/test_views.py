@@ -4,14 +4,14 @@ import pytest
 from django.test import override_settings
 from django.urls import reverse
 
-from helsinki_health_endpoints.utils import _get_package_version
+from helsinki_health_endpoints.utils import _get_version
 
 
 @pytest.fixture(autouse=True)
 def clear_version_cache():
-    _get_package_version.cache_clear()
+    _get_version.cache_clear()
     yield
-    _get_package_version.cache_clear()
+    _get_version.cache_clear()
 
 
 @pytest.fixture
@@ -35,7 +35,7 @@ def test_readiness_ok(client, readiness_url):
     assert {
         "status",
         "database",
-        "packageVersion",
+        "version",
         "release",
     } == set(data)
 

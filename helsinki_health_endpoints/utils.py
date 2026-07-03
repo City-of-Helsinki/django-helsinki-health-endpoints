@@ -11,7 +11,7 @@ from django.db import connection
 
 
 @functools.cache
-def _get_package_version() -> str:
+def _get_version() -> str:
     try:
         pyproject_path = Path(settings.BASE_DIR) / "pyproject.toml"
         with open(pyproject_path, "rb") as f:

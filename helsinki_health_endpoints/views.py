@@ -2,7 +2,7 @@ from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_GET
 
-from .utils import _check_database, _get_package_version
+from .utils import _check_database, _get_version
 
 
 @require_GET
@@ -21,7 +21,7 @@ def readiness(request):
     return JsonResponse(
         {
             "status": db_status,
-            "packageVersion": _get_package_version(),
+            "version": _get_version(),
             "release": release,
             "database": db_status,
         },

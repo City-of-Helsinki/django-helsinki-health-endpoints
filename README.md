@@ -89,7 +89,7 @@ SENTRY_RELEASE = os.environ.get("SENTRY_RELEASE", "")
 | ID | Level | Description |
 |---|---|---|
 | `helsinki_health_endpoints.E001` | Error | `BASE_DIR` is not defined in settings. |
-| `helsinki_health_endpoints.E002` | Error | `pyproject.toml` is excluded by `.dockerignore` (the file is required at runtime to read the package version). |
+| `helsinki_health_endpoints.E002` | Error | `pyproject.toml` is excluded by `.dockerignore` (the file is required at runtime to read the version). |
 | `helsinki_health_endpoints.W001` | Warning | `.dockerignore` exists but could not be read (e.g. permission error). |
 
 ## Response examples
@@ -105,7 +105,7 @@ HTTP 200
 ```json
 {
   "status": "ok",
-  "packageVersion": "1.2.3",
+  "version": "1.2.3",
   "release": "theapp@1.2.3",
   "database": "ok"
 }
@@ -118,7 +118,7 @@ HTTP 503
 
 {
   "status": "error",
-  "packageVersion": "1.2.3",
+  "version": "1.2.3",
   "release": "theapp@1.2.3",
   "database": "error"
 }

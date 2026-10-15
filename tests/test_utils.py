@@ -1,21 +1,9 @@
-import sys
 from unittest.mock import patch
 
 import pytest
 from django.test import override_settings
 
 from helsinki_health_endpoints.utils import _check_database, _get_version
-
-
-@pytest.mark.skipif(
-    sys.version_info >= (3, 11), reason="tomli fallback only applies on Python < 3.11"
-)
-class TestTomliImportFallback:
-    def test_tomli_used_as_tomllib(self):
-        """On Python < 3.11, tomli is imported as the tomllib fallback."""
-        import helsinki_health_endpoints.utils as utils_module
-
-        assert utils_module.tomllib.__name__ == "tomli"
 
 
 class TestCheckDatabase:

@@ -1,10 +1,6 @@
 import functools
+import tomllib
 from pathlib import Path
-
-try:
-    import tomllib
-except ImportError:
-    import tomli as tomllib  # type: ignore[no-redef]
 
 from django.conf import settings
 from django.db import connection

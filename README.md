@@ -16,6 +16,8 @@ Reusable Django app providing unified `/healthz` and `/readiness` endpoints for 
 pip install django-helsinki-health-endpoints
 ```
 
+Requires Python 3.11+.
+
 ## Configuration
 
 ### 1. Add to `INSTALLED_APPS`
@@ -186,7 +188,7 @@ The matrix defined in `pyproject.toml` is:
 
 | Python | Django |
 |--------|--------|
-| 3.10, 3.11 | 5.2 |
+| 3.11 | 5.2 |
 | 3.12, 3.13, 3.14 | 5.2, 6.0 |
 
 Each combination gets its own isolated venv (created automatically by hatch on first run, stored in hatch's environment cache).

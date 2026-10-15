@@ -189,7 +189,7 @@ The matrix defined in `pyproject.toml` is:
 | Python | Django |
 |--------|--------|
 | 3.11 | 5.2 |
-| 3.12, 3.13, 3.14 | 5.2, 6.0 |
+| 3.12, 3.13, 3.14 | 5.2, 6.0, 6.1 |
 
 Each combination gets its own isolated venv (created automatically by hatch on first run, stored in hatch's environment cache).
 

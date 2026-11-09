@@ -97,6 +97,11 @@ lint = [
     "pre-commit run -a",
 ]
 
+[tool.hatch.envs.hatch-uv]
+dependencies = [
+  "uv>=0.13.5",
+]
+
 [tool.ruff]
 target-version = "py311"
 
